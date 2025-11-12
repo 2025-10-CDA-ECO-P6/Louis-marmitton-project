@@ -1,4 +1,4 @@
-@url = http://localhost:3000
+@url = http://localhost:1337
 
 @token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzYyNzc4MDg2LCJleHAiOjE3NjUzNzAwODZ9.rlx3NXGdRJ1QeXs_6RcPLhuP7gTUD5oRetHiy7Z6or0
 
@@ -32,7 +32,7 @@ POST {{url}}/api/auth/local
 Content-Type: application/json
 
 {
-  "identifier": "foobar",
+  "identifier": "foobar@example.com",
   "password": "foobarpassword"
 }
 
