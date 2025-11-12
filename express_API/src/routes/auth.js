@@ -1,7 +1,7 @@
 import { compare, hash } from "bcrypt";
 import { Router } from "express";
 import jwt from "jsonwebtoken";
-import { db } from "../index.js";
+import { dbPromise } from "../index.js";
 
 export const authRouter = Router();
 
@@ -13,17 +13,22 @@ authRouter.post("/local/register", async (req, res) => {
   }
 
   const hashedPassword = await hash(password, 10);
-  try {
-    await db.run("INSERT INTO users (username, email, password) VALUES (?, ?, ?)", [username, email, hashedPassword])
-    const user = await db.get("SELECT * FROM users WHERE email = ?", [email]);
-    const token = jwt.sign({ id: user.id, email: user.email }, process.env.SECRET, { expiresIn: '1h' });
-    delete user.password;
-    res.status(201).json({ ...user, jwt:token });
-  }
-  catch(error) {
-    console.error(error);
-    res.status(500).json({ error: "Internal server error" });
-  }
+  
+  dbPromise.then(async (db) => {
+    try {
+      await db.run("INSERT INTO users (username, email, password) VALUES (?, ?, ?)", [username, email, hashedPassword]);
+      const user = await db.get("SELECT * FROM users WHERE email = ?", [email]);
+      const token = jwt.sign({ id: user.id, email: user.email }, process.env.SECRET, { expiresIn: '1h' });
+      delete user.password;
+      res.status(201).json({ ...user, jwt: token });
+    } catch(error) {
+      console.error(error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Database connection failed" });
+  });
 });
 
 authRouter.post("/local/", async (req, res) => {
@@ -32,19 +37,28 @@ authRouter.post("/local/", async (req, res) => {
     return res.status(400).json({ error: "Missing identifier or password" });
   }
 
-  const user = await db.get("SELECT * FROM users WHERE email = ?", [identifier]);
-  if (!user) {
-    return res.status(401).json({ error: "Invalid email or password" });
-  }
+  dbPromise.then(async (db) => {
+    try {
+      const user = await db.get("SELECT * FROM users WHERE email = ?", [identifier]);
+      if (!user) {
+        return res.status(401).json({ error: "Invalid email or password" });
+      }
 
-  const passwordMatch = await compare(password, user.password);
-  if (!passwordMatch) {
-    return res.status(401).json({ error: "Invalid email or password" });
-  }
+      const passwordMatch = await compare(password, user.password);
+      if (!passwordMatch) {
+        return res.status(401).json({ error: "Invalid email or password" });
+      }
 
-  const token = jwt.sign({ id: user.id, email: user.email }, process.env.SECRET, { expiresIn: '1h' });
-  delete user.password;
+      const token = jwt.sign({ id: user.id, email: user.email }, process.env.SECRET, { expiresIn: '1h' });
+      delete user.password;
 
-  res.json({ ...user, jwt: token });
-
+      res.json({ ...user, jwt: token });
+    } catch(error) {
+      console.error(error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  }).catch((error) => {
+    console.error("Database connection error:", error);
+    res.status(500).json({ error: "Database connection failed" });
+  });
 });
