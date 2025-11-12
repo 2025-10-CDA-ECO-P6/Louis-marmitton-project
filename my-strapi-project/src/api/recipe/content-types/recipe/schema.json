@@ -1,10 +1,10 @@
 {
   "kind": "collectionType",
-  "collectionName": "recettes",
+  "collectionName": "recipes",
   "info": {
-    "singularName": "recette",
-    "pluralName": "recettes",
-    "displayName": "recettes"
+    "singularName": "recipe",
+    "pluralName": "recipes",
+    "displayName": "recipes"
   },
   "options": {
     "draftAndPublish": false
@@ -25,6 +25,12 @@
     },
     "description": {
       "type": "text"
+    },
+    "ingredients": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::ingredient.ingredient",
+      "inversedBy": "recipes"
     }
   }
 }

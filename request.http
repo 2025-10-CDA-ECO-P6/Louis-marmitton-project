@@ -1,6 +1,6 @@
-@url = http://localhost:3000
+@url = http://localhost:1337
 
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJmb29iYXJAZXhhbXBsZS5jb20iLCJpYXQiOjE3NjI5NTM1NTAsImV4cCI6MTc2Mjk1NzE1MH0.E8ttirNCvKzfuzAt5vL-bQDbHawXz10Mc1j1-HD2X10
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzYyOTU4Njc4LCJleHAiOjE3NjU1NTA2Nzh9.racxRd6OpCs-_bRnfmx27deR6hVtl1CcGG9GbfUE7zs
 
 
 ### Fetch recipe data from external API (HTML response to parse)
