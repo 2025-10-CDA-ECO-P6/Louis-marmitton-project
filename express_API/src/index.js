@@ -3,7 +3,7 @@ import { Router } from 'express'
 import { open } from 'sqlite'
 import sqlite3 from 'sqlite3'
 import dotenv from 'dotenv'
-import { recipesRouter } from './routes/routes.js'
+import { recipesRouter, ingredientsRouter, recipeIngredientsRouter } from './routes/routes.js'
 import { authRouter } from './routes/auth.js'
 
 // Load environment variables
@@ -15,6 +15,8 @@ app.use(express.json())
 
 const apiRouter = Router()
 apiRouter.use('/recipes', recipesRouter)
+apiRouter.use('/ingredients', ingredientsRouter)
+apiRouter.use('/recipe-ingredients', recipeIngredientsRouter)
 apiRouter.use('/auth', authRouter)
 app.use('/api', apiRouter)
 
