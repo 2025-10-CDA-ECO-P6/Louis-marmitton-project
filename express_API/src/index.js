@@ -3,7 +3,9 @@ import { Router } from 'express'
 import { open } from 'sqlite'
 import sqlite3 from 'sqlite3'
 import dotenv from 'dotenv'
-import { recipesRouter, ingredientsRouter, recipeIngredientsRouter } from './routes/routes.js'
+import { recipesRouter } from './routes/routesRecette.js'
+import { ingredientsRouter } from './routes/routesIgredients.js'
+import { recipeIngredientsRouter } from './routes/routesRelations.js'
 import { authRouter } from './routes/auth.js'
 
 // Load environment variables
