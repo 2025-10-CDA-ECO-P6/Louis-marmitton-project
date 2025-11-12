@@ -4,7 +4,7 @@
 
 
 ### Fetch recipe data from external API (HTML response to parse)
-GET https://encuisine.adrienrossignol.fr/recette/45
+GET https://encuisine.adrienrossignol.fr/recette/41
 Accept: text/html
 
 # L'indicqteur de budget, temps de prepartion et difficulte figure dans la page html sous forme d'icones a compterr
@@ -42,11 +42,11 @@ Content-Type: application/json
 # Authorization: Bearer {{token}}
 
 {
-  "titre": "Saucissés fumées, pomme de terre et champignons",
+  "titre": "Poêlée de patate douce et feta",
   "temps_de_preparation": 2,
-  "difficulte": 2,
-  "budget": 2,
-  "description": "Cette recette s'effectue au Cookée. Couper les pommes de terre, les champignons, l'oignon et les saucisses. Mettre les pommes de terre 10 minutes en mode doré. Ajouter les saucisses et l'oignon. Mode doré 10 minutes. Ajouter les champignons, les aromates (herbes de Provence et ail) et l'eau. Cuire sous pression pendant 4 minutes. Ingrédients: 2 saucisses fumées, 4 pommes de terre, 200g de champignons, 1 oignon, 50ml d'eau."
+  "difficulte": 1,
+  "budget": 1,
+  "description": "Pelez les patates douces et coupez-les en petits cubes.Faites-les revenir dans une poêle 10 minutes avec un filet d'huile d'olive..."
 }
 
 ###
