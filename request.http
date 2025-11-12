@@ -49,7 +49,20 @@ Authorization: Bearer {{token}}
   "description": "Pelez les patates douces et coupez-les en petits cubes.Faites-les revenir dans une poêle 10 minutes avec un filet d'huile d'olive..."
 }
 
-###
+### Cretate new recette for strapi
+POST {{url}}/api/recipes
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "data": {
+    "titre": "Poêlée de patate douce et feta",
+    "temps_de_preparation": 2,
+    "difficulte": 1,
+    "budget": 1,
+    "description": "Pelez les patates douces et coupez-les en petits cubes.Faites-les revenir dans une poêle 10 minutes avec un filet d'huile d'olive..."
+  }
+}
 
 ### Get all recipes to verify creation
 GET {{url}}/api/recipes
