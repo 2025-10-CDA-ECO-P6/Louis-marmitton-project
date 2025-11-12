@@ -80,3 +80,95 @@ Authorization: Bearer {{token}}
 DELETE {{url}}/api/recipes/1
 Accept: application/json
 Authorization: Bearer {{token}}
+
+###
+# ============================================
+# INGREDIENTS ROUTES
+# ============================================
+
+### Get all ingredients
+GET {{url}}/api/ingredients
+Accept: application/json
+Authorization: Bearer {{token}}
+
+###
+
+### Get specific ingredient by ID
+GET {{url}}/api/ingredients/1
+Accept: application/json
+Authorization: Bearer {{token}}
+
+###
+
+### Create new ingredient
+POST {{url}}/api/ingredients
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "nom": "Patate douce"
+}
+
+###
+
+### Update specific ingredient by ID
+PUT {{url}}/api/ingredients/1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "nom": "Patate douce bio"
+}
+
+###
+
+### Delete specific ingredient by ID
+DELETE {{url}}/api/ingredients/1
+Accept: application/json
+Authorization: Bearer {{token}}
+
+###
+# ============================================
+# RECIPE-INGREDIENTS RELATIONSHIP ROUTES
+# ============================================
+
+### Get all ingredients for a specific recipe
+GET {{url}}/api/recipe-ingredients/recipe/1/ingredients
+Accept: application/json
+Authorization: Bearer {{token}}
+
+###
+
+### Get all recipes using a specific ingredient
+GET {{url}}/api/recipe-ingredients/ingredient/1/recipes
+Accept: application/json
+Authorization: Bearer {{token}}
+
+###
+
+### Add a single ingredient to a recipe
+POST {{url}}/api/recipe-ingredients/recipe/1/ingredient/2
+Authorization: Bearer {{token}}
+
+###
+
+### Add multiple ingredients to a recipe at once
+POST {{url}}/api/recipe-ingredients/recipe/1/ingredients
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "ingredientIds": [1, 2, 3, 4]
+}
+
+###
+
+### Remove a specific ingredient from a recipe
+DELETE {{url}}/api/recipe-ingredients/recipe/1/ingredient/2
+Authorization: Bearer {{token}}
+
+###
+
+### Remove all ingredients from a recipe
+DELETE {{url}}/api/recipe-ingredients/recipe/1/ingredients
+Authorization: Bearer {{token}}
