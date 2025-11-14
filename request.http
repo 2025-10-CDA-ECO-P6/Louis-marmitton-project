@@ -20,8 +20,8 @@ POST {{url}}/api/auth/local/register
 Content-Type: application/json
 
 {
-  "username": "foobar",
-  "email": "foobar@example.com",
+  "username": "louis",
+  "email": "louis@example.com",
   "password": "foobarpassword"
 }
 
@@ -31,7 +31,7 @@ POST {{url}}/api/auth/local
 Content-Type: application/json
 
 {
-  "identifier": "foobar@example.com",
+  "identifier": "louis@example.com",
   "password": "foobarpassword"
 }
 
