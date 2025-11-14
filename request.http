@@ -1,6 +1,6 @@
-@url = http://localhost:3000
+@url = http://localhost:1337
 
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzYzMTE2OTgwLCJleHAiOjE3NjU3MDg5ODB9.RiRhMLoHroSZsX-zctFdarHs5OWMguUo3IXiqrQaMgc
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJsb3Vpc0BleGFtcGxlLmNvbSIsImlhdCI6MTc2MzEyMzExNSwiZXhwIjoxNzYzMTI2NzE1fQ.aSN1gAzHDhfqKIQ1mWod_w9xDcMMV5y7ehBahjtFytY
 
 ### Fetch recipe data from external API (HTML response to parse)
 GET https://encuisine.adrienrossignol.fr/recette/42
@@ -73,15 +73,6 @@ GET {{url}}/api/recipes
 Accept: application/json
 Authorization: Bearer {{token}}
 
-###
-
-### Get specific recipe by documentId (Strapi v5 style)
-GET {{url}}/api/recipes/recipe_5
-Accept: application/json
-Authorization: Bearer {{token}}
-
-###
-
 ### Filter recipes by budget with pagination
 GET {{url}}/api/recipes?filters[budget][$eq]=3&page=1&pageSize=5
 Accept: application/json
@@ -90,22 +81,10 @@ Authorization: Bearer {{token}}
 ###
 
 ### Get recipe with populated ingredients (using documentId)
-GET {{url}}/api/recipes/recipe_5?populate=*
+GET {{url}}/api/recipes/5?populate=*
 Accept: application/json
 Authorization: Bearer {{token}}
 
-### Update specific recipe by documentId (Strapi v5 style)
-PUT {{url}}/api/recipes/recipe_1
-Content-Type: application/json
-Authorization: Bearer {{token}}
-
-{
-  "data": {
-    "description": "Mise a jour de la description de la recette."
-  }
-}
-
-###
 
 ### Update specific recipe by regular ID (backwards compatible)
 PUT {{url}}/api/recipes/1
@@ -118,14 +97,8 @@ Authorization: Bearer {{token}}
   }
 }
 
-###
 
-### Delete specific recipe by documentId (Strapi v5 style)
-DELETE {{url}}/api/recipes/recipe_1
-Accept: application/json
-Authorization: Bearer {{token}}
 
-###
 
 ### Delete specific recipe by ID (backwards compatible)
 DELETE {{url}}/api/recipes/1
@@ -142,7 +115,6 @@ GET {{url}}/api/ingredients?page=1&pageSize=10
 Accept: application/json
 Authorization: Bearer {{token}}
 
-###
 
 ### Get all ingredients with recipe population
 GET {{url}}/api/ingredients?populate=recipes
@@ -156,12 +128,6 @@ GET {{url}}/api/ingredients/1
 Accept: application/json
 Authorization: Bearer {{token}}
 
-###
-
-### Get specific ingredient by documentId (Strapi v5 style)
-GET {{url}}/api/ingredients/ingredient_1
-Accept: application/json
-Authorization: Bearer {{token}}
 
 ###
 
@@ -183,20 +149,6 @@ Authorization: Bearer {{token}}
   }
 }
 
-###
-
-### Update specific ingredient by documentId (Strapi v5 style)
-PUT {{url}}/api/ingredients/ingredient_1
-Content-Type: application/json
-Authorization: Bearer {{token}}
-
-{
-  "data": {
-    "name": "Patate douce"
-  }
-}
-
-###
 
 ### Update specific ingredient by ID (backwards compatible)
 PUT {{url}}/api/ingredients/1
@@ -209,14 +161,6 @@ Authorization: Bearer {{token}}
   }
 }
 
-###
-
-### Delete specific ingredient by documentId (Strapi v5 style)
-DELETE {{url}}/api/ingredients/ingredient_1
-Accept: application/json
-Authorization: Bearer {{token}}
-
-###
 
 ### Delete specific ingredient by ID (backwards compatible)
 DELETE {{url}}/api/ingredients/1

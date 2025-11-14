@@ -12,7 +12,7 @@ import { authRouter } from './routes/auth.js'
 dotenv.config()
 
 const app = express()
-const port = 3000
+const port = 1337
 app.use(express.json())
 
 const apiRouter = Router()
