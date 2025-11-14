@@ -1,10 +1,9 @@
 @url = http://localhost:3000
 
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJmb29iYXJAZXhhbXBsZS5jb20iLCJpYXQiOjE3NjMxMDk4MDgsImV4cCI6MTc2MzExMzQwOH0.wbvoNjECnmBwrU7oQoZTWUS-g3venSpZPjyk9YJpDm8
-
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzYzMTE2OTgwLCJleHAiOjE3NjU3MDg5ODB9.RiRhMLoHroSZsX-zctFdarHs5OWMguUo3IXiqrQaMgc
 
 ### Fetch recipe data from external API (HTML response to parse)
-GET https://encuisine.adrienrossignol.fr/recette/41
+GET https://encuisine.adrienrossignol.fr/recette/42
 Accept: text/html
 
 # L'indicqteur de budget, temps de prepartion et difficulte figure dans la page html sous forme d'icones a compterr
@@ -36,48 +35,79 @@ Content-Type: application/json
   "password": "foobarpassword"
 }
 
-### Create new recette in Express API
-POST {{url}}/api/recipes
-Content-Type: application/json
-Authorization: Bearer {{token}}
+# ============================================
+# RECIPES ROUTES
+# ============================================
 
-{
-  "titre": "Poêlée de patate douce et feta",
-  "temps_de_preparation": 2,
-  "difficulte": 1,
-  "budget": 1,
-  "description": "Pelez les patates douces et coupez-les en petits cubes.Faites-les revenir dans une poêle 10 minutes avec un filet d'huile d'olive..."
-}
-
-### Cretate new recette for strapi
+### Create new recipe with Strapi-style format
 POST {{url}}/api/recipes
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
   "data": {
-    "titre": "Poêlée de patate douce et feta",
-    "temps_de_preparation": 2,
+    "titre": "Gnocchi aux champignons et à la feta",
+    "temps_de_preparation": 1,
     "difficulte": 1,
     "budget": 1,
-    "description": "Pelez les patates douces et coupez-les en petits cubes.Faites-les revenir dans une poêle 10 minutes avec un filet d'huile d'olive..."
+    "description": "Essuyez les champignons et coupez-les en lamelles.Dans une poêle bien chaude, faites fondre une noisette de beurre. Faites revenir les gnocchi 2 minutes jusqu'à ce qu'ils soient bien dorés.."
   }
 }
 
-### Get all recipes to verify creation
+### Get all recipes with pagination (page 1, 10 items per page)
+GET {{url}}/api/recipes?page=1&pageSize=10
+Accept: application/json
+Authorization: Bearer {{token}}
+
+###
+
+### Get all recipes with population
+GET {{url}}/api/recipes?populate=ingredients
+Accept: application/json
+Authorization: Bearer {{token}}
+
+###
+
+### Get specific recipe by ID (using regular id)
 GET {{url}}/api/recipes
 Accept: application/json
 Authorization: Bearer {{token}}
 
 ###
 
-### Get specific recette by ID (replace {id} with actual ID)
-GET {{url}}/api/recipes/1
+### Get specific recipe by documentId (Strapi v5 style)
+GET {{url}}/api/recipes/recipe_5
 Accept: application/json
 Authorization: Bearer {{token}}
 
+###
 
-### Update specific recette by ID (replace {id} with actual ID)
+### Filter recipes by budget with pagination
+GET {{url}}/api/recipes?filters[budget][$eq]=3&page=1&pageSize=5
+Accept: application/json
+Authorization: Bearer {{token}}
+
+###
+
+### Get recipe with populated ingredients (using documentId)
+GET {{url}}/api/recipes/recipe_5?populate=*
+Accept: application/json
+Authorization: Bearer {{token}}
+
+### Update specific recipe by documentId (Strapi v5 style)
+PUT {{url}}/api/recipes/recipe_1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "data": {
+    "description": "Mise a jour de la description de la recette."
+  }
+}
+
+###
+
+### Update specific recipe by regular ID (backwards compatible)
 PUT {{url}}/api/recipes/1
 Content-Type: application/json
 Authorization: Bearer {{token}}
@@ -88,8 +118,16 @@ Authorization: Bearer {{token}}
   }
 }
 
+###
 
-### Delete specific recette by ID (replace {id} with actual ID)
+### Delete specific recipe by documentId (Strapi v5 style)
+DELETE {{url}}/api/recipes/recipe_1
+Accept: application/json
+Authorization: Bearer {{token}}
+
+###
+
+### Delete specific recipe by ID (backwards compatible)
 DELETE {{url}}/api/recipes/1
 Accept: application/json
 Authorization: Bearer {{token}}
@@ -99,8 +137,15 @@ Authorization: Bearer {{token}}
 # INGREDIENTS ROUTES
 # ============================================
 
-### Get all ingredients
-GET {{url}}/api/ingredients
+### Get all ingredients with pagination
+GET {{url}}/api/ingredients?page=1&pageSize=10
+Accept: application/json
+Authorization: Bearer {{token}}
+
+###
+
+### Get all ingredients with recipe population
+GET {{url}}/api/ingredients?populate=recipes
 Accept: application/json
 Authorization: Bearer {{token}}
 
@@ -113,29 +158,67 @@ Authorization: Bearer {{token}}
 
 ###
 
-### Create new ingredient
+### Get specific ingredient by documentId (Strapi v5 style)
+GET {{url}}/api/ingredients/ingredient_1
+Accept: application/json
+Authorization: Bearer {{token}}
+
+###
+
+### Get specific ingredient by documentId with populated recipes
+GET {{url}}/api/ingredients/ingredient_1?populate=*
+Accept: application/json
+Authorization: Bearer {{token}}
+
+###
+
+### Create new ingredient with Strapi-style format
 POST {{url}}/api/ingredients
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "nom": "Patate douce"
+  "data": {
+    "name": "Champignon"
+  }
 }
 
 ###
 
-### Update specific ingredient by ID
+### Update specific ingredient by documentId (Strapi v5 style)
+PUT {{url}}/api/ingredients/ingredient_1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "data": {
+    "name": "Patate douce"
+  }
+}
+
+###
+
+### Update specific ingredient by ID (backwards compatible)
 PUT {{url}}/api/ingredients/1
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "nom": "Patate douce bio"
+  "data": {
+    "name": "Patate douce"
+  }
 }
 
 ###
 
-### Delete specific ingredient by ID
+### Delete specific ingredient by documentId (Strapi v5 style)
+DELETE {{url}}/api/ingredients/ingredient_1
+Accept: application/json
+Authorization: Bearer {{token}}
+
+###
+
+### Delete specific ingredient by ID (backwards compatible)
 DELETE {{url}}/api/ingredients/1
 Accept: application/json
 Authorization: Bearer {{token}}
@@ -160,7 +243,7 @@ Authorization: Bearer {{token}}
 ###
 
 ### Add a single ingredient to a recipe
-POST {{url}}/api/recipe-ingredients/recipe/1/ingredient/2
+POST {{url}}/api/recipe-ingredients/recipe/5/ingredient/1
 Authorization: Bearer {{token}}
 
 ###
@@ -171,7 +254,7 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "ingredientIds": [1, 2, 3, 4]
+  "ingredientIds": [1]
 }
 
 ###

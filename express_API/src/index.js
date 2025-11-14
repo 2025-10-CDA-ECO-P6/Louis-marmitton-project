@@ -31,6 +31,7 @@ export const db = await open({
 await db.run(`
   CREATE TABLE IF NOT EXISTS recipes (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
+    documentId TEXT UNIQUE,
     titre TEXT NOT NULL,
     temps_de_preparation INTEGER NOT NULL,
     difficulte INTEGER NOT NULL,
@@ -39,13 +40,28 @@ await db.run(`
   )
 `)
 
+// Add documentId column to existing recipes if it doesn't exist
+try {
+  await db.run('ALTER TABLE recipes ADD COLUMN documentId TEXT UNIQUE')
+} catch (error) {
+  // Column already exists, ignore error
+}
+
 // Creation de la table ingredients si elle n'existe pas
 await db.run(`
   CREATE TABLE IF NOT EXISTS ingredients (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
+    documentId TEXT UNIQUE,
     nom TEXT NOT NULL
   )
 `)
+
+// Add documentId column to existing ingredients if it doesn't exist
+try {
+  await db.run('ALTER TABLE ingredients ADD COLUMN documentId TEXT UNIQUE')
+} catch (error) {
+  // Column already exists, ignore error
+}
 
 // Creation de la table de jonction pour la relation many-to-many
 await db.run(`
